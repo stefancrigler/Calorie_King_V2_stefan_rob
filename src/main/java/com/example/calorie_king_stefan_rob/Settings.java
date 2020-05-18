@@ -1,0 +1,97 @@
+package com.example.calorie_king_stefan_rob;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Settings extends AppCompatActivity {
+    private Button calorie_goal_update;
+    private TextView goal_update;
+    private TextView calorie_goal;
+    private int daily_goal;
+    private Object goal;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        Log.d("db", "here");
+
+    }
+
+    public void update_goal(View View){
+        TextView calorie_goal = findViewById(R.id.calorie_goal);
+        TextView goal_update = findViewById(R.id.goal_update);
+        try{
+            Integer.parseInt(goal_update.getText().toString());
+            calorie_goal.setText("Calorie Goal: " + goal_update.getText().toString());
+            daily_goal = Integer.parseInt(goal_update.getText().toString()); //set the goal to new value
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("calorie goal" ,daily_goal);
+            editor.apply();
+            Log.d("db","Beginning add");
+            Map<String, String> cg = new HashMap<>();
+            cg.put("calorie_goal",goal_update.getText().toString());
+            db.collection("calorie_goals")
+                    .add(cg)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d("db", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("db", "Error adding document", e);
+                        }
+                    });
+        }
+        catch(NumberFormatException e){
+            Toast.makeText(Settings.this, "Not a Valid Calorie Goal",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void back_to_home(View view){
+        Intent intent = new Intent(Settings.this, HomeScreen.class);
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("db", document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w("db", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+        startActivity(intent);
+        finish();
+
+    }
+}
