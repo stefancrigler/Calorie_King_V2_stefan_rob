@@ -1,2 +1,2 @@
-rootProject.name='Calorie_King_Stefan_Rob'
+rootProject.name='Calorie_Tracker_ECE150'
 include ':app'
