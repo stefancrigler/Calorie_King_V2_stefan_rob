@@ -99,7 +99,7 @@
 
     <Button
         android:id="@+id/button_add_ingredient"
-        android:layout_width="300dp"
+        android:layout_width="260dp"
         android:layout_height="60dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -117,7 +117,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_add_ingredient"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="edit/delete ingredient" />
+        tools:text="edit ingredient" />
 
     <TextView
         android:id="@+id/textView_kcal_ratio"

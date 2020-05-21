@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+
 public class OpeningPage extends AppCompatActivity {
     private static Button login;
     private static Button signup;
@@ -16,6 +20,8 @@ public class OpeningPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opening_page);
+
+
     }
     public void signUp(View view){
         //Click the sign up button, for users that have never made an account

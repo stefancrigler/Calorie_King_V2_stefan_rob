@@ -37,7 +37,7 @@ public class AddMealActivity extends AppCompatActivity
    private TextView kcalRatioTextView;
 
    private FirebaseFirestore db;
-   private FirebaseUser currentUser;
+//   private FirebaseUser currentUser;
    private String currentUserUID;
 
    private static String LOG_TAG = "AddMealActivity";
@@ -57,26 +57,23 @@ public class AddMealActivity extends AppCompatActivity
 //      todaysLogRecyclerView.setAdapter(todaysLogAdapter);
 //      db = FirebaseFirestore.getInstance();
 
-      // ingredientNameEditText
+//      currentUserUID = getIntent().getStringExtra("currentUserUID");
+//      db.collection(currentUserUID).document().get
 
-      // unitNameEditText
-
-      // nUnitEditText
-
-      // nKcalInRatioEditText
-
-      // nUnitInRatioEditText
 
       // addIngredientButton
+      addIngredientButton = (Button) this.findViewById(R.id.button_add_ingredient);
       addIngredientButton.setOnClickListener(new View.OnClickListener()
       {
          @Override
          public void onClick(View v)
          {
+
          }
       });
 
       // editDeleteIngredientButton
+      editDeleteIngredientButton = (Button) this.findViewById(R.id.button_edit_delete_ingredient);
       editDeleteIngredientButton.setOnClickListener(new View.OnClickListener()
       {
          @Override
@@ -86,6 +83,7 @@ public class AddMealActivity extends AppCompatActivity
       });
 
       // callNutritionxButton
+      callNutritionxButton = (Button) this.findViewById(R.id.button_call_nutritionx);
       callNutritionxButton.setOnClickListener(new View.OnClickListener()
       {
          @Override
@@ -98,7 +96,6 @@ public class AddMealActivity extends AppCompatActivity
 
 
 //      //DEBUG////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//      Date date = new Date(System.currentTimeMillis());
 //
 //      Map<String, Object> dataToWrite = new HashMap<>();
 //      dataToWrite.put("unit", "pack");

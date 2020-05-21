@@ -43,11 +43,9 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Log.i("Daily Log","Going to Daily Log");
-                // [ROB_MOD] ###############################################################################################
                 Intent homeScreenToDailyLogIntent = new Intent(HomeScreen.this, DailyLogActivity.class);
                 startActivity(homeScreenToDailyLogIntent);
                 finish();
-                // ###############################################################################################[ROB_MOD]
             }
         });
 

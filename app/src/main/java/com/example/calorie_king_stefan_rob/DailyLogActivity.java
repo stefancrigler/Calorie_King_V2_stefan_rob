@@ -22,7 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.WriteResult;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +45,8 @@ public class DailyLogActivity extends AppCompatActivity
    private FirebaseUser currentUser;
    private String currentUserUID;
 
-
+   private String todaysDateFormatted;
+   
    @Override
    protected void onCreate(Bundle savedInstanceState)
    {
@@ -60,6 +63,11 @@ public class DailyLogActivity extends AppCompatActivity
       currentUser = FirebaseAuth.getInstance().getCurrentUser();
       currentUserUID = currentUser.getUid();
 
+      Date c = Calendar.getInstance().getTime();
+      SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+      todaysDateFormatted = df.format(c);
+
+
       //addMealButton
       addMealButton.setOnClickListener(new View.OnClickListener()
       {
@@ -67,6 +75,8 @@ public class DailyLogActivity extends AppCompatActivity
          public void onClick(View v)
          {
             Intent dailyLogToAddMealIntent = new Intent(DailyLogActivity.this, AddMealActivity.class);
+            dailyLogToAddMealIntent.putExtra("todaysDateFormatted", todaysDateFormatted);
+            dailyLogToAddMealIntent.putExtra("currentUserUID", currentUserUID);
             startActivity(dailyLogToAddMealIntent);
             finish();
          }
